@@ -25,7 +25,7 @@ func main() {
 	// Conecta ao MongoDB Atlas
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	clientOptions := options.Client().ApplyURI("mongodb+srv://danielvor:#Duno#1996@danielvor.jwkglzf.mongodb.net")
+	clientOptions := options.Client().ApplyURI("MONGODB_URI")
 	var err error
 	client, err = mongo.Connect(ctx, clientOptions)
 	if err != nil {
