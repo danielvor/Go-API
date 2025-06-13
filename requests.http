@@ -1,0 +1,29 @@
+### 1. Listar todas as tarefas (GET)
+GET http://localhost:8080/tasks
+Accept: application/json
+
+### 2. Buscar uma tarefa por ID (GET)
+GET http://localhost:8080/tasks/663d9c4e7a1b2a4e9f4e8a1e
+Accept: application/json
+
+### 3. Criar uma nova tarefa (POST)
+POST http://localhost:8080/tasks
+Content-Type: application/json
+
+{
+  "title": "Daniel Rodrigues",
+  "content": "Software Engineer"
+}
+
+### 4. Atualizar uma tarefa (PUT)
+PUT http://localhost:8080/tasks/684ca86c297fff16419d8da1
+Content-Type: application/json
+
+{
+  "title": "Daniel Victor de Oliveira Rodrigues",
+  "content": "Software Engineer"
+}
+
+### 5. Deletar uma tarefa (DELETE)
+DELETE http://localhost:8080/tasks/684ca7bd297fff16419d8da0
+Accept: application/json
