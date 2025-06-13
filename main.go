@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"os"
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -23,9 +24,10 @@ var client *mongo.Client
 
 func main() {
 	// Conecta ao MongoDB Atlas
+	mongodbURI := os.Getenv("MONGODB_URI")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	clientOptions := options.Client().ApplyURI("MONGODB_URI")
+	clientOptions := options.Client().ApplyURI(mongodbURI)
 	var err error
 	client, err = mongo.Connect(ctx, clientOptions)
 	if err != nil {
