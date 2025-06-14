@@ -1,5 +1,5 @@
 ### 1. Listar todas as tarefas (GET)
-GET http://localhost:8080/tasks
+GET https://go-api-t7tu.onrender.com/tasks
 Accept: application/json
 
 ### 2. Buscar uma tarefa por ID (GET)
@@ -7,11 +7,11 @@ GET http://localhost:8080/tasks/663d9c4e7a1b2a4e9f4e8a1e
 Accept: application/json
 
 ### 3. Criar uma nova tarefa (POST)
-POST http://localhost:8080/tasks
+POST https://go-api-t7tu.onrender.com/tasks
 Content-Type: application/json
 
 {
-  "title": "Daniel Rodrigues",
+  "title": "Cecilia Prado",
   "content": "Software Engineer"
 }
 
