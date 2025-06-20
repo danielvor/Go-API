@@ -12,6 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"github.com/rs/cors"
 )
 
 type Task struct {
@@ -23,31 +24,38 @@ type Task struct {
 var client *mongo.Client
 
 func main() {
-	// Conecta ao MongoDB Atlas
-	mongodbURI := os.Getenv("MONGODB_URI")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	clientOptions := options.Client().ApplyURI(mongodbURI)
-	var err error
-	client, err = mongo.Connect(ctx, clientOptions)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer client.Disconnect(ctx)
+    // MongoDB connection
+    mongodbURI := os.Getenv("MONGODB_URI")
+    ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+    defer cancel()
+    clientOptions := options.Client().ApplyURI(mongodbURI)
+    var err error
+    client, err = mongo.Connect(ctx, clientOptions)
+    if err != nil {
+        log.Fatal(err)
+    }
+    defer client.Disconnect(ctx)
 
-	// Inicializa o roteador
-	router := mux.NewRouter()
+    // Router
+    router := mux.NewRouter()
 
-	// Rotas
-	router.HandleFunc("/tasks", getTasks).Methods("GET")
-	router.HandleFunc("/tasks/{id}", getTask).Methods("GET")
-	router.HandleFunc("/tasks", createTask).Methods("POST")
-	router.HandleFunc("/tasks/{id}", updateTask).Methods("PUT")
-	router.HandleFunc("/tasks/{id}", deleteTask).Methods("DELETE")
+    // Routes
+    router.HandleFunc("/tasks", getTasks).Methods("GET")
+    router.HandleFunc("/tasks/{id}", getTask).Methods("GET")
+    router.HandleFunc("/tasks", createTask).Methods("POST")
+    router.HandleFunc("/tasks/{id}", updateTask).Methods("PUT")
+    router.HandleFunc("/tasks/{id}", deleteTask).Methods("DELETE")
 
-	// Inicia o servidor
-	log.Println("Servidor rodando na porta :8080")
-	log.Fatal(http.ListenAndServe(":8080", router))
+    // CORS handler
+    handler := cors.New(cors.Options{
+        AllowedOrigins:   []string{"https://danielvor.onrender.com"},
+        AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+        AllowedHeaders:   []string{"Content-Type"},
+        AllowCredentials: true,
+    }).Handler(router)
+
+    log.Println("Servidor rodando na porta :8080")
+    log.Fatal(http.ListenAndServe(":8080", handler))
 }
 
 // Retorna todas as tarefas
