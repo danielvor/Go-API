@@ -48,7 +48,7 @@ func main() {
 
     // CORS handler
     handler := cors.New(cors.Options{
-        AllowedOrigins:   []string{"https://danielvor.onrender.com"},
+        AllowedOrigins:   []string{"https://danielvor.onrender.com", "https://danielvor.vercel.app/*"},
         AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
         AllowedHeaders:   []string{"Content-Type"},
         AllowCredentials: true,
